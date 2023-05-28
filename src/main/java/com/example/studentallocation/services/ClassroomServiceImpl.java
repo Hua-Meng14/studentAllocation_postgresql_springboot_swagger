@@ -11,11 +11,16 @@ import java.util.NoSuchElementException;
 @Service
 public class ClassroomServiceImpl implements ClassroomService {
 
-    private ClassroomRepository classroomRepository;
+    private final ClassroomRepository classroomRepository;
 
     @Autowired
-    public ClassroomServiceImpl() {
+    public ClassroomServiceImpl(ClassroomRepository classroomRepository) {
         this.classroomRepository = classroomRepository;
+    }
+
+    public ClassroomServiceImpl() {
+
+        classroomRepository = null;
     }
 
     @Override
