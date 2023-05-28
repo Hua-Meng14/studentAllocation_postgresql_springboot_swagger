@@ -4,8 +4,6 @@ import com.example.studentallocation.models.User;
 import com.example.studentallocation.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Date;
-
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -21,21 +19,21 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String loginUser(User user) {
-        User existingUser = userRepository.findByEmail(user.getEmail());
-        if (existingUser != null && bCryptPasswordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
-            // Generate JWT token
-            String token = Jwts.builder()
-                    .setSubject(existingUser.getEmail())
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 hours
-                    .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                    .compact();
-            return token;
-        } else {
-            throw new IllegalArgumentException("Invalid Credentials");
-        }
-    }
+//    public String loginUser(User user) {
+//        User existingUser = userRepository.findByEmail(user.getEmail());
+//        if (existingUser != null && bCryptPasswordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
+//            // Generate JWT token
+//            String token = Jwts.builder()
+//                    .setSubject(existingUser.getEmail())
+//                    .setIssuedAt(new Date())
+//                    .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 hours
+//                    .signWith(SignatureAlgorithm.HS512, jwtSecret)
+//                    .compact();
+//            return token;
+//        } else {
+//            throw new IllegalArgumentException("Invalid Credentials");
+//        }
+//    }
     public User updateProfile(Long userId, User updatedUser) {
         User user = getUserById(userId);
         user.setName(updatedUser.getName());
@@ -55,13 +53,13 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
-    private String generateJwtToken(String email) {
-        return Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 hours
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .compact();
-    }
+//    private String generateJwtToken(String email) {
+//        return Jwts.builder()
+//                .setSubject(email)
+//                .setIssuedAt(new Date())
+//                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 hours
+//                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+//                .compact();
+//    }
 }
 
